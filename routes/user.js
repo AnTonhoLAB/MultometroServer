@@ -6,31 +6,21 @@ const router = express.Router();
 router.post("/create", function(req, res) {
     const userToSave = req.body.user
 
-    bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(userToSave.password, salt, (err, hash) => {
-            if (err) {
-
-            }
-            userToSave.password = hash
-
-            userModel.create({
-                userName: userToSave.userName, 
-                email: userToSave.email,
-                password: userToSave.password
-            }).then(savedUser => {
-                res.status(200).send( { data: savedUser } );
-            })
-            .catch(err => {
-                res.status(500).send({ message: err});
-            });
-        });
-    });
-
-   
+    res.status(200).send(userToSave);
 });
 
-function encrypt(word){
+// //routes/user.js
+// const express = require('express');
+// const router = express.Router();
 
-}
+// /* GET users listing. */
+// router.get('/', function(req, res, next) {
+//   res.send('respond with a resource');
+// });
 
-module.exports = router
+// /* GET user profile. */
+// router.get('/profile', function(req, res, next) {
+//     res.send(req.user);
+// });
+
+module.exports = router;
