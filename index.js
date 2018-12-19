@@ -1,36 +1,12 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const Sequelize = require('sequelize');
+const user = require('./modules/user');
 
 const app = express();
 app.use(bodyParser.urlencoded({
     extended: true
 }));
-
 app.use(bodyParser.json());
-
-const sequelize = new Sequelize('mulltometro','root', '123123', {
-    host: "localhost",
-    dialect: 'mysql'
-});
-
-sequelize.authenticate()
-    .then(() => {
-        console.log("Success");
-    })
-    .catch(err => {
-        console.log("Fail " + err);
-    });
-
-const user = sequelize.define('multometroUser',{
-    userName: Sequelize.STRING,
-	email: Sequelize.STRING,
-	photoURL: Sequelize.TEXT,
-    firstTime: { 
-        type: Sequelize.TINYINT,
-        default: 1
-    }
-});
 
 app.get("/", function(req, res) {
     res.status(200).send( { message:  "Bem vindo ao server"} );
@@ -38,7 +14,7 @@ app.get("/", function(req, res) {
 
 app.post("/createUser", function(req, res) {
     const userToSave = req.body.user
-
+    
     user.create({
         userName: userToSave.userName, 
         email: userToSave.email
