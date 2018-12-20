@@ -13,15 +13,17 @@ router.post("/create", (req, res) => {
         dueDate: roomToSave.dueDate,
         color: roomToSave.color,
     }).then(savedRoom => {
-        return userInRoom.create({
-            userType: "ADMIN",
+        const userSavedRoom = userInRoom.create({
+            userType: user.type,
             enterDate: new Date(),
             idUser: user.id,
             idRoom: savedRoom.id
         });
+
+        return Promise.all([userSavedRoom, savedRoom]);
     })
-    .then(saved => {
-        res.status(200).send( { data: saved } );
+    .then(([userInRoom, savedRoom])=> {
+        res.status(200).send( { room: savedRoom } );
     })
     .catch(err => {
         res.status(500).send({ message: err });
