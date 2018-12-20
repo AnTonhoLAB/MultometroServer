@@ -3,12 +3,12 @@ const bodyParser = require("body-parser");
 const session = require('express-session');
 const flash = require('connect-flash');
 const passport = require('passport');
-// require('./config/auth')(passport);
 require('./config/passport');
 
 //routes files
 const auth = require('./routes/auth');
 const user = require('./routes/user');
+const room = require('./routes/room');
 
 const app = express();
 
@@ -35,10 +35,11 @@ app.use(bodyParser.urlencoded( { extended: true } ));
 app.use(bodyParser.json());
 
 app.use('/auth', auth);
-// app.use('/user', user);
 
 app.use('/user', passport.authenticate('jwt', {session: false}), user);
+app.use('/room', passport.authenticate('jwt', {session: false}), room);
 
-app.listen(8081, function(){
+const PORT = process.env.PORT || 8081 
+app.listen(PORT, ()=> {
     console.log("PPQP");
 });
