@@ -122,4 +122,7 @@ typings/
 # Ignore all local history of files
 .history
 
+## credentials 
+dbCredentials.js
+
 # End of https://www.gitignore.io/api/node,macos,visualstudiocode

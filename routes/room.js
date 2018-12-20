@@ -7,6 +7,4 @@ router.post("/create", (req, res) => {
     res.status(200).send(userToSave);
 });
 
-
-
 module.exports = router;

@@ -1,9 +1,16 @@
 const Sequelize = require('sequelize');
+const prodSequelize = require('./dbCredentials');
 
-const sequelize = new Sequelize('mulltometro','root', '123123', {
-    host: "localhost",
-    dialect: 'mysql'
-});
+var sequilize
+
+if(process.env.NODE_ENV == "production") {
+    sequilize = prodSequelize
+} else {
+    sequelize = new Sequelize('mulltometro','root', '123123', {
+        host: "localhost",
+        dialect: 'mysql'
+    });
+}
 
 sequelize.authenticate()
     .then(() => {
