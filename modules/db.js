@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const prodSequelize = require('./dbCredentials');
 
-var sequilize
+var sequelize
 
 if(process.env.NODE_ENV == "production") {
     sequilize = prodSequelize
