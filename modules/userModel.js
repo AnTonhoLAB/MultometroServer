@@ -5,10 +5,8 @@ const user = db.sequelize.define('multometroUser',{
 	email: db.Sequelize.STRING,
 	photoURL: db.Sequelize.TEXT,
     password: db.Sequelize.TEXT,
-    firstTime: { 
-        type: db.Sequelize.TINYINT,
-        default: 1
-    }
+    bio: db.Sequelize.TEXT,
+    firstTime: db.Sequelize.TINYINT
 });
 
 module.exports = user;
