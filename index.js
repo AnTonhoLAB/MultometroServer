@@ -9,6 +9,7 @@ require('./config/passport');
 //routes files
 const auth = require('./routes/auth');
 const user = require('./routes/user');
+const room = require('./routes/room');
 
 const app = express();
 
@@ -35,9 +36,10 @@ app.use(bodyParser.urlencoded( { extended: true } ));
 app.use(bodyParser.json());
 
 app.use('/auth', auth);
-// app.use('/user', user);
 
 app.use('/user', passport.authenticate('jwt', {session: false}), user);
+app.use('/room', room);
+// app.use('/room', passport.authenticate('jwt', {session: false}), room);
 
 app.listen(8081, function(){
     console.log("PPQP");
