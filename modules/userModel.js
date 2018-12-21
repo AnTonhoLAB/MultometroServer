@@ -1,6 +1,7 @@
 const db = require('./db');
+const userInRoom = require('./userInRoomModel');
 
-const user = db.sequelize.define('multometroUser',{
+const user = db.sequelize.define('mulltometroUser',{
     userName: db.Sequelize.STRING,
 	email: db.Sequelize.STRING,
 	photoURL: db.Sequelize.TEXT,
@@ -8,5 +9,8 @@ const user = db.sequelize.define('multometroUser',{
     bio: db.Sequelize.TEXT,
     firstTime: db.Sequelize.TINYINT
 });
+
+user.hasMany(userInRoom);
+userInRoom.belongsTo(user);
 
 module.exports = user;

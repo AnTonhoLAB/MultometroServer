@@ -1,8 +1,10 @@
-const userModel = require('../modules/userModel');
 const express = require('express');
 const router = express.Router();
+
+const userModel = require('../modules/userModel');
 const roomModel = require('../modules/roomModel');
 const userInRoom = require('../modules/userInRoomModel');
+
 
 router.post("/create", (req, res) => {
     const roomToSave = req.body.room
@@ -16,18 +18,34 @@ router.post("/create", (req, res) => {
         const userSavedRoom = userInRoom.create({
             userType: user.type,
             enterDate: new Date(),
-            idUser: user.id,
-            idRoom: savedRoom.id
+            mulltometroUserId: user.mulltometroUserId,
+            roomId: savedRoom.id
         });
 
-        return Promise.all([userSavedRoom, savedRoom]);
+        return userSavedRoom;
     })
-    .then(([userInRoom, savedRoom])=> {
-        res.status(200).send( { room: savedRoom } );
+    .then(_userInRoom => {
+        return roomModel.findById( _userInRoom.id, queryRoom);
+    })
+    .then( room => {
+        const abc = room.userInRooms[0].mulltometroUser
+        res.status(200).send( { room: room} );
     })
     .catch(err => {
         res.status(500).send({ message: err });
     });
 });
+
+const queryRoom = {
+    attributes: ['id', 'name','dueDate', 'color', 'createdAt' ],
+    include: [{    
+            attributes: ['userType', 'enterDate','mulltometroUserId' ],
+            model: userInRoom, 
+            include:[ {
+                    attributes: ['userName', 'email','photoURL' ], 
+                    model:   userModel 
+                }]
+        }]
+} 
 
 module.exports = router;
