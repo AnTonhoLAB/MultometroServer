@@ -36,7 +36,7 @@ function getMyRooms(userId){
 }
 
 function getRoomById(room) {
-    return roomModel.findById( room.id, roomInformationFilter)
+    return roomModel.findById( room.id, roomInformationFilter())
         .then( room => {
             return room
         })
