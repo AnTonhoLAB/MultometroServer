@@ -24,7 +24,7 @@ router.post("/getMyRooms", (req, res)=> {
 
     roomController.getMyRooms(userId)
         .then( rooms => {
-            res.status(200).send( { room: rooms } );
+            res.status(200).send( { rooms: rooms } );
         })
         .catch(err =>{
             res.status(500).send({ message: err });
@@ -32,7 +32,18 @@ router.post("/getMyRooms", (req, res)=> {
 });
 
 router.post("/enterRoom", (req, res)=> {
+    const userId = req.body.userId;
+    const roomId = req.body.roomId;
     
+    roomController.enterRoom(userId, roomId) 
+        .then( room => {
+            res.status(200).send( { room: room } );
+        })
+        .catch(err =>{
+            console.log("Erro aqui " + err);
+            
+            res.status(500).send({ message: err });
+        });
 });
 
 router.post("/getRoomById", (req, res) => {

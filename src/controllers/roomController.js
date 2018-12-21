@@ -26,7 +26,7 @@ function createRoom(roomToSave, user) {
 }
 
 function getMyRooms(userId){
-    return roomModel.findAll(roomInformationFilterWhereId(userId))
+    return roomModel.find(roomInformationFilterWhereId(userId))
         .then(rooms => {
             return rooms;
         })
@@ -43,6 +43,24 @@ function getRoomById(room) {
         .catch(err => {
             return err
         });
+}
+
+function enterRoom(userId, roomId) {
+    
+    return roomModel.findById(roomId, roomInformationFilter())
+        .then(room => {
+            for(var i = 0; i < room.userInRooms.length; i++) {
+                if (room.userInRooms[i].mulltometroUserId == userId) {
+                    throw new Error('Usuario ja pertence a esta sala');
+                }
+            }
+            return userInRoom.create({
+                userType: "USER",
+                enterDate: new Date(),
+                mulltometroUserId: userId,
+                roomId: roomId
+            });
+        })
 }
 
 function roomInformationFilter() {
@@ -63,9 +81,11 @@ function roomInformationFilterWhereId(userId) {
     return {
         attributes: ['id', 'name','dueDate', 'color', 'createdAt'],
         include: [{
+            where: { mulltometroUserId: userId },
+            
             attributes: ['userType', 'enterDate','mulltometroUserId'],
             model: userInRoom, 
-            where: { mulltometroUserId: userId },
+            // through: { where: { mulltometroUserId: userId } },
             include: [{
                 attributes: ['userName', 'email', 'photoURL'],
                 model: userModel
@@ -77,5 +97,6 @@ function roomInformationFilterWhereId(userId) {
 module.exports = { 
    createRoom: createRoom,
    getMyRooms: getMyRooms,
-   getRoomById: getRoomById
+   getRoomById: getRoomById,
+   enterRoom: enterRoom
 }
