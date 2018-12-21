@@ -36,13 +36,25 @@ router.post("/create", (req, res) => {
     });
 });
 
+router.post("/getRoomById", (req, res) => {
+    const room = req.body.room
+
+    roomModel.findById( room.id, queryRoom)
+        .then( room => {
+            res.status(200).send( { room: room} );
+        })
+        .catch(err => {
+            res.status(500).send({ message: err });
+        });
+});
+
 const queryRoom = {
     attributes: ['id', 'name','dueDate', 'color', 'createdAt' ],
     include: [{    
             attributes: ['userType', 'enterDate','mulltometroUserId' ],
             model: userInRoom, 
             include:[ {
-                    attributes: ['userName', 'email','photoURL' ], 
+                    attributes: ['userName', 'email', 'photoURL' ], 
                     model:   userModel 
                 }]
         }]
