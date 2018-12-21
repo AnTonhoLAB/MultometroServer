@@ -1,6 +1,4 @@
-const userModel = require('../modules/userModel');
 const express = require('express');
-const bcrypt = require('bcryptjs');
 const router = express.Router();
 
 router.post("/create", (req, res) => {

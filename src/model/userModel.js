@@ -1,4 +1,4 @@
-const db = require('./db');
+const db = require('../../modules/db');
 const userInRoom = require('./userInRoomModel');
 
 const user = db.sequelize.define('mulltometroUser',{
