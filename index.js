@@ -6,9 +6,9 @@ const passport = require('passport');
 require('./config/passport');
 
 //routes files
-const auth = require('./routes/auth');
-const user = require('./routes/user');
-const room = require('./routes/room');
+const auth = require('./src/routes/auth');
+const user = require('./src/routes/user');
+const room = require('./src/routes/room');
 
 const app = express();
 

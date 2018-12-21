@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-const userModel = require('../src/model/userModel');
-const roomModel = require('../src/model/roomModel');
-const userInRoom = require('../src/model/userInRoomModel');
+const userModel = require('../model/userModel');
+const roomModel = require('../model/roomModel');
+const userInRoom = require('../model/userInRoomModel');
 
 
 router.post("/create", (req, res) => {
