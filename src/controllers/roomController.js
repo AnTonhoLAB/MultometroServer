@@ -18,7 +18,7 @@ function createRoom(roomToSave, user) {
         return userSavedRoom;
     })
     .then(_userInRoom => {
-        return roomModel.findById( _userInRoom.id, roomInformationFilter);
+        return roomModel.findById( _userInRoom.id, roomInformationFilter());
     })
     .catch(err => {
         return err;
@@ -45,17 +45,19 @@ function getRoomById(room) {
         });
 }
 
-const roomInformationFilter = {
-    attributes: ['id', 'name','dueDate', 'color', 'createdAt' ],
-    include: [{    
-        attributes: ['userType', 'enterDate','mulltometroUserId'],
-        model: userInRoom,
-        include:[ {
-                attributes: ['userName', 'email', 'photoURL'],
-                model: userModel
-            }]
-    }]
-} 
+function roomInformationFilter() {
+    return {
+        attributes: ['id', 'name','dueDate', 'color', 'createdAt' ],
+        include: [{    
+            attributes: ['userType', 'enterDate','mulltometroUserId'],
+            model: userInRoom,
+            include:[ {
+                    attributes: ['userName', 'email', 'photoURL'],
+                    model: userModel
+                }]
+        }]
+    } 
+}
 
 function roomInformationFilterWhereId(userId) {
     return {
