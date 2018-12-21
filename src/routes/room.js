@@ -12,11 +12,27 @@ router.post("/create", (req, res) => {
 
     roomController.createRoom(roomToSave, user)
         .then( room => {
-            res.status(200).send( { room: room} );
+            res.status(200).send( { room: room } );
         })
         .catch(err =>{
             res.status(500).send({ message: err });
         });
+});
+
+router.post("/getMyRooms", (req, res)=> {
+    const userId = req.body.id;
+
+    roomController.getMyRooms(userId)
+        .then( rooms => {
+            res.status(200).send( { room: rooms } );
+        })
+        .catch(err =>{
+            res.status(500).send({ message: err });
+        });
+});
+
+router.post("/enterRoom", (req, res)=> {
+    
 });
 
 router.post("/getRoomById", (req, res) => {
@@ -29,14 +45,6 @@ router.post("/getRoomById", (req, res) => {
         .catch(err => {
             res.status(500).send({ message: err });
         });
-
-    // roomModel.findById( room.id, roomInformationFilter)
-    //     .then( room => {
-    //         res.status(200).send( { room: room} );
-    //     })
-    //     .catch(err => {
-    //         res.status(500).send({ message: err });
-    //     });
 });
 
 module.exports = router;
