@@ -1,6 +1,7 @@
 const userModel = require('../model/userModel');
 const roomModel = require('../model/roomModel');
 const userInRoom = require('../model/userInRoomModel');
+const db = require('../../modules/db');
 
 function createRoom(roomToSave, user) {
 
@@ -26,9 +27,11 @@ function createRoom(roomToSave, user) {
 }
 
 function getMyRooms(userId){
-    return roomModel.find(roomInformationFilterWhereId(userId))
+    return userInRoom.findAll(roomInformationFilterWhereId(userId))
         .then(rooms => {
-            return rooms;
+            return rooms.map( room => {
+                return room.room;
+            }) ;
         })
         .catch(err => {
             return err;
@@ -71,28 +74,56 @@ function roomInformationFilter() {
             model: userInRoom,
             include:[ {
                     attributes: ['userName', 'email', 'photoURL'],
-                    model: userModel
+                    model: userModel,
+                    // as: 'userDescription'
                 }]
         }]
     } 
 }
 
+// function roomInformationFilterWhereId(userId) {
+//     return {
+        
+//         attributes: ['id', 'name','dueDate', 'color', 'createdAt'],
+//         // where: { taloco: db.Sequelize.col('userInRooms.mulltometroUserId') },
+//         include: [{
+//             model: userInRoom, 
+//             include: [{
+//                 where: { mulltometroUserId: userId },
+//                 attributes: ['userName', 'email', 'photoURL'],
+//                 model: userModel,
+
+//                 include: [{
+//                     model: userInRoom
+//                 }]
+//             }]
+//         }]
+//     }
+// }
+
+// get roo ugly
+
 function roomInformationFilterWhereId(userId) {
     return {
-        attributes: ['id', 'name','dueDate', 'color', 'createdAt'],
+        where: { mulltometroUserId: userId },
+
+        // attributes: ['userType', 'enterDate','mulltometroUserId', 'roomId'],
+        attributes: [],
         include: [{
-            where: { mulltometroUserId: userId },
-            
-            attributes: ['userType', 'enterDate','mulltometroUserId'],
-            model: userInRoom, 
-            // through: { where: { mulltometroUserId: userId } },
+            attributes: ['id', 'name','dueDate', 'color', 'createdAt'],
+            model: roomModel,
             include: [{
-                attributes: ['userName', 'email', 'photoURL'],
-                model: userModel
+                attributes: ['userType', 'enterDate','mulltometroUserId', 'roomId'],
+                model: userInRoom,
+                include: [{
+                    attributes: ['userName', 'email', 'photoURL'],
+                    model: userModel,
+                }]
             }]
         }]
     }
 }
+
 
 module.exports = { 
    createRoom: createRoom,
