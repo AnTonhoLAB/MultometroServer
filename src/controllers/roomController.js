@@ -81,28 +81,6 @@ function roomInformationFilter() {
     } 
 }
 
-// function roomInformationFilterWhereId(userId) {
-//     return {
-        
-//         attributes: ['id', 'name','dueDate', 'color', 'createdAt'],
-//         // where: { taloco: db.Sequelize.col('userInRooms.mulltometroUserId') },
-//         include: [{
-//             model: userInRoom, 
-//             include: [{
-//                 where: { mulltometroUserId: userId },
-//                 attributes: ['userName', 'email', 'photoURL'],
-//                 model: userModel,
-
-//                 include: [{
-//                     model: userInRoom
-//                 }]
-//             }]
-//         }]
-//     }
-// }
-
-// get roo ugly
-
 function roomInformationFilterWhereId(userId) {
     return {
         where: { mulltometroUserId: userId },
@@ -123,7 +101,6 @@ function roomInformationFilterWhereId(userId) {
         }]
     }
 }
-
 
 module.exports = { 
    createRoom: createRoom,
