@@ -25,7 +25,7 @@ router.post("/create", (req, res) => {
         return userSavedRoom;
     })
     .then(_userInRoom => {
-        return roomModel.findById( _userInRoom.id, queryRoom);
+        return roomModel.findById( _userInRoom.id, roomInformationFilter);
     })
     .then( room => {
         const abc = room.userInRooms[0].mulltometroUser
@@ -39,7 +39,7 @@ router.post("/create", (req, res) => {
 router.post("/getRoomById", (req, res) => {
     const room = req.body.room
 
-    roomModel.findById( room.id, queryRoom)
+    roomModel.findById( room.id, roomInformationFilter)
         .then( room => {
             res.status(200).send( { room: room} );
         })
@@ -48,7 +48,7 @@ router.post("/getRoomById", (req, res) => {
         });
 });
 
-const queryRoom = {
+const roomInformationFilter = {
     attributes: ['id', 'name','dueDate', 'color', 'createdAt' ],
     include: [{    
             attributes: ['userType', 'enterDate','mulltometroUserId' ],
