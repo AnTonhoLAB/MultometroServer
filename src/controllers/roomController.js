@@ -62,6 +62,12 @@ function enterRoom(userId, roomId) {
                 roomId: roomId
             });
         })
+        .then((savedUserInRoom) => {
+            return roomModel.findByPk(savedUserInRoom.roomId, queryRoom.roomInformationFilter())
+        })
+        .catch(err => {
+            return err
+        });
 }
 
 module.exports = { 
