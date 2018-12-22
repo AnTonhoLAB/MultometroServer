@@ -1,32 +1,31 @@
-const userModel = require('../model/userModel');
+
 const roomModel = require('../model/roomModel');
 const userInRoom = require('../model/userInRoomModel');
-const ruleModel= require('../model/ruleModel');
-const db = require('../../modules/db');
+const ruleModel = require('../model/ruleModel');
+const queryRoom = require('../querysModels/queryRoom');
 
 function createRoom(roomToSave, user) {
     
-    return roomModel.create(roomToSave).then(savedRoom => {
-        const userSavedRoom = userInRoom.create({
-            userType: user.type,
-            enterDate: new Date(),
-            mulltometroUserId: user.mulltometroUserId,
-            roomId: savedRoom.id
+    return roomModel.create(roomToSave,{ include: [ruleModel] })
+        .then(savedRoom => {
+            const userSavedRoom = userInRoom.create({
+                userType: user.type,
+                enterDate: new Date(),
+                mulltometroUserId: user.mulltometroUserId,
+                roomId: savedRoom.id
+            });
+            return userSavedRoom;
+        })
+        .then(_userInRoom => {
+            return roomModel.findById( _userInRoom.id, queryRoom.roomInformationFilter());
+        })
+        .catch(err => {
+            return err;
         });
-        return userSavedRoom;
-    })
-    .then(_userInRoom => {
-        console.log("TIO");
-        
-        return roomModel.findById( _userInRoom.id, roomInformationFilter());
-    })
-    .catch(err => {
-        return err;
-    });
 }
 
 function getMyRooms(userId){
-    return userInRoom.findAll(roomInformationFilterWhereId(userId))
+    return userInRoom.findAll(queryRoom.roomInformationFilterWhereId(userId))
         .then(rooms => {
             return rooms.map( room => {
                 return room.room;
@@ -38,7 +37,7 @@ function getMyRooms(userId){
 }
 
 function getRoomById(room) {
-    return roomModel.findByPk( room.id, roomInformationFilter())
+    return roomModel.findByPk( room.id, queryRoom.roomInformationFilter())
         .then( room => {
             return room
         })
@@ -49,7 +48,7 @@ function getRoomById(room) {
 
 function enterRoom(userId, roomId) {
     
-    return roomModel.findByPk(roomId, roomInformationFilter())
+    return roomModel.findByPk(roomId, queryRoom.roomInformationFilter())
         .then(room => {
             for(var i = 0; i < room.userInRooms.length; i++) {
                 if (room.userInRooms[i].mulltometroUserId == userId) {
@@ -63,44 +62,6 @@ function enterRoom(userId, roomId) {
                 roomId: roomId
             });
         })
-}
-
-function roomInformationFilter() {
-    return {
-        attributes: ['id', 'name','dueDate', 'color', 'createdAt' ],
-        include: [{    
-            attributes: ['userType', 'enterDate','mulltometroUserId'],
-            model: userInRoom,
-            include:[ {
-                    attributes: ['userName', 'email', 'photoURL'],
-                    model: userModel,
-                    // as: 'userDescription'
-                }]
-        },{
-            model: ruleModel
-        }]
-    } 
-}
-
-function roomInformationFilterWhereId(userId) {
-    return {
-        where: { mulltometroUserId: userId },
-
-        // attributes: ['userType', 'enterDate','mulltometroUserId', 'roomId'],
-        attributes: [],
-        include: [{
-            attributes: ['id', 'name','dueDate', 'color', 'createdAt'],
-            model: roomModel,
-            include: [{
-                attributes: ['userType', 'enterDate','mulltometroUserId', 'roomId'],
-                model: userInRoom,
-                include: [{
-                    attributes: ['userName', 'email', 'photoURL'],
-                    model: userModel,
-                }]
-            }]
-        }]
-    }
 }
 
 module.exports = { 

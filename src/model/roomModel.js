@@ -11,6 +11,8 @@ const room = db.sequelize.define('rooms',{
 room.hasMany(userInRoom);
 userInRoom.belongsTo(room);
 
+// room.ruleModel = room.belongsTo(ruleModel)
+// ruleModel.room = ruleModel.belongsTo(room);
 room.hasMany(ruleModel);
 ruleModel.belongsTo(room);
 
