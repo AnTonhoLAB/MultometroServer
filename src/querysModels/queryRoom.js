@@ -2,6 +2,7 @@ const userModel = require('../model/userModel');
 const roomModel = require('../model/roomModel');
 const userInRoom = require('../model/userInRoomModel');
 const ruleModel = require('../model/ruleModel');
+const appliedFeeModel = require('../model/appliedFeeModel');
 
 const roomAtributes = ['id', 'name','dueDate', 'color', 'createdAt']
 const userAtributes = ['userName', 'email', 'photoURL']
@@ -19,7 +20,13 @@ function roomInformationFilter() {
                 }]
         },{
             model: ruleModel
-        }]
+        },{
+            model: appliedFeeModel,
+            include:[{
+                model: ruleModel
+            }]
+        }
+    ]
     } 
 }
 
@@ -39,6 +46,11 @@ function roomInformationFilterWhereId(userId) {
                 }]
             },{
                 model: ruleModel
+            },{
+                model: appliedFeeModel,
+                include:[{
+                    model: ruleModel
+                }]
             }]
         }]
     }

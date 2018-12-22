@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const roomModel = require('../model/roomModel');
+appliedFeeModel = require('../model/appliedFeeModel');
 
 const roomController = require('../controllers/roomController');
 

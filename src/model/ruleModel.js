@@ -1,4 +1,5 @@
 const db = require('../../modules/db');
+const appiedFeeModel = require('./appliedFeeModel');
 
 const rule = db.sequelize.define('rule',{
     name: db.Sequelize.STRING,
@@ -9,7 +10,7 @@ const rule = db.sequelize.define('rule',{
     roomId: db.Sequelize.INTEGER
 });
 
-// rule.hasMany(roomModel);
-// roomModel.belongsTo(rule);
+rule.hasMany(appiedFeeModel);
+appiedFeeModel.belongsTo(rule);
 
 module.exports = rule;
