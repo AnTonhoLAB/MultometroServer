@@ -5,13 +5,15 @@ const roomModel = require('../model/roomModel');
 
 const roomController = require('../controllers/roomController');
 
-
 router.post("/create", (req, res) => {
     const roomToSave = req.body.room
     const user  = req.body.user
-
+    console.log("PORRA");
+    
     roomController.createRoom(roomToSave, user)
         .then( room => {
+            console.log("PAP");
+            
             res.status(200).send( { room: room } );
         })
         .catch(err =>{

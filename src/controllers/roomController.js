@@ -1,15 +1,12 @@
 const userModel = require('../model/userModel');
 const roomModel = require('../model/roomModel');
 const userInRoom = require('../model/userInRoomModel');
+const ruleModel= require('../model/ruleModel');
 const db = require('../../modules/db');
 
 function createRoom(roomToSave, user) {
-
-    return roomModel.create({
-        name: roomToSave.name,
-        dueDate: roomToSave.dueDate,
-        color: roomToSave.color,
-    }).then(savedRoom => {
+    
+    return roomModel.create(roomToSave).then(savedRoom => {
         const userSavedRoom = userInRoom.create({
             userType: user.type,
             enterDate: new Date(),
@@ -19,6 +16,8 @@ function createRoom(roomToSave, user) {
         return userSavedRoom;
     })
     .then(_userInRoom => {
+        console.log("TIO");
+        
         return roomModel.findById( _userInRoom.id, roomInformationFilter());
     })
     .catch(err => {
@@ -39,7 +38,7 @@ function getMyRooms(userId){
 }
 
 function getRoomById(room) {
-    return roomModel.findById( room.id, roomInformationFilter())
+    return roomModel.findByPk( room.id, roomInformationFilter())
         .then( room => {
             return room
         })
@@ -50,7 +49,7 @@ function getRoomById(room) {
 
 function enterRoom(userId, roomId) {
     
-    return roomModel.findById(roomId, roomInformationFilter())
+    return roomModel.findByPk(roomId, roomInformationFilter())
         .then(room => {
             for(var i = 0; i < room.userInRooms.length; i++) {
                 if (room.userInRooms[i].mulltometroUserId == userId) {
@@ -77,6 +76,8 @@ function roomInformationFilter() {
                     model: userModel,
                     // as: 'userDescription'
                 }]
+        },{
+            model: ruleModel
         }]
     } 
 }
