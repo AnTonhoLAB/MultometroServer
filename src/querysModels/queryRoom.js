@@ -7,6 +7,8 @@ const appliedFeeModel = require('../model/appliedFeeModel');
 const roomAtributes = ['id', 'name','dueDate', 'color', 'createdAt']
 const userAtributes = ['userName', 'email', 'photoURL']
 const userInRoomAtributes = ['userType', 'enterDate','mulltometroUserId']
+const appliedFeeAtributes = ['appliedData', 'dueDate', 'paid', 'paidDate', 'description','ruleId','mulltometroUserId']
+    
 
 function roomInformationFilter() {
     return {
@@ -21,6 +23,7 @@ function roomInformationFilter() {
         },{
             model: ruleModel
         },{
+            attributes: appliedFeeAtributes,
             model: appliedFeeModel,
             include:[{
                 model: ruleModel
@@ -47,6 +50,7 @@ function roomInformationFilterWhereId(userId) {
             },{
                 model: ruleModel
             },{
+                attributes: appliedFeeAtributes,
                 model: appliedFeeModel,
                 include:[{
                     model: ruleModel

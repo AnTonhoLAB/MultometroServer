@@ -8,7 +8,7 @@ const user = db.sequelize.define('mulltometroUser',{
 	photoURL: db.Sequelize.TEXT,
     password: db.Sequelize.TEXT,
     bio: db.Sequelize.TEXT,
-    firstTime: db.Sequelize.TINYINT
+    firstTime: db.Sequelize.BOOLEAN
 });
 
 user.hasMany(userInRoom);
