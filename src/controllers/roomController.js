@@ -2,6 +2,7 @@
 const roomModel = require('../model/roomModel');
 const userInRoom = require('../model/userInRoomModel');
 const ruleModel = require('../model/ruleModel');
+const appliedFeeModel = require('../model/appliedFeeModel');
 const queryRoom = require('../querysModels/queryRoom');
 
 function createRoom(roomToSave, user) {
@@ -70,9 +71,33 @@ function enterRoom(userId, roomId) {
         });
 }
 
+function applyFee(appliedFeeToSave) {
+    // -- apply fee in DB
+    // insert into appliedFees(`appliedData`, `dueDate`, `paid`, `description`, `ruleId`,`mulltometroUserId`, `roomId`, `createdAt`, `updatedAt`)
+    // values ('2018-12-22','2019-01-01', 0,"nao adianta fala com o cara", 1,1,2, '2018-12-22','2018-12-22' ); 
+
+    // apply fee in model
+    // appliedData: 
+    // dueDate: 
+    // paid: false
+    // description: db.Sequelize.TEXT,
+
+    // ruleId: db.Sequelize.INTEGER,
+    // mulltometroUserId: db.Sequelize.INTEGER,
+    // roomId: db.Sequelize.INTEGER,
+    return appliedFeeModel.create(appliedFeeToSave) //, {include: appliedFeeModel}
+        .then(appliedFee => {
+            return roomModel.findByPk(appliedFee.roomId, queryRoom.roomInformationFilter());
+        })
+        .catch(err => { 
+            return err;
+        });
+}
+
 module.exports = { 
    createRoom: createRoom,
    getMyRooms: getMyRooms,
    getRoomById: getRoomById,
-   enterRoom: enterRoom
+   enterRoom: enterRoom,
+   applyFee: applyFee
 }

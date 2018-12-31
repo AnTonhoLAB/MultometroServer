@@ -57,6 +57,18 @@ router.post("/getRoomById", (req, res) => {
         });
 });
 
+router.post("/applyFee", (req, res) => {
+    const appliedFee = req.body.applyFee;
+
+    roomController.applyFee(appliedFee)
+        .then( room => {
+            res.status(200).send( { room: room} );
+        })
+        .catch(err => {
+            res.status(500).send({ message: err });
+        });
+});
+
 router.post("/test", (req, res) => {
     res.status(200).send( { working: true } );
 });
