@@ -73,7 +73,9 @@ function enterRoom(userId, roomId) {
 
 function applyFee(appliedFeeToSave) {
     appliedFeeToSave.appliedData = new Date()
-    return appliedFeeModel.create(appliedFeeToSave) //, {include: appliedFeeModel}
+
+// TODO: - check id user participe in current room
+    return appliedFeeModel.create(appliedFeeToSave) 
         .then(appliedFee => {
             return roomModel.findByPk(appliedFee.roomId, queryRoom.roomInformationFilter());
         })
