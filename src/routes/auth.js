@@ -19,7 +19,6 @@ router.post("/register", function(req, res) {
             userToSave.password = hash
 
             userModel.create({
-                userName: userToSave.userName, 
                 email: userToSave.email,
                 password: userToSave.password
             }).then(savedUser => {
