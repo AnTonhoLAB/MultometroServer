@@ -35,7 +35,7 @@ router.post("/register", function(req, res) {
 router.post('/login', function (req, res, next) {
     passport.authenticate('local', {session: false}, (err, user, info) => {
         if ( err || !user ) {
-            return res.status(400).json( { message: 'Wronuser or password' + err, code: 404 } );
+            return res.status(400).json( { message: 'Wrong user or password' + err, code: 404 } );
         } 
 
         req.login(user, {session: false}, (err) => {
