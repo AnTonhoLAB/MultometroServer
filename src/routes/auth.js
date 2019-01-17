@@ -37,7 +37,6 @@ router.post('/login', function (req, res, next) {
         if ( err || !user ) {
             return res.status(400).json( { message: 'Wrong user or password' + err, code: 101 } );
         } 
-
         req.login(user, {session: false}, (err) => {
 
             if (err) {
