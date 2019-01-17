@@ -14,7 +14,7 @@ router.post("/register", function(req, res) {
     bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(userToSave.password, salt, (err, hash) => {
             if (err) {
-                res.status(500).send( { message: err } );
+                res.status(500).send( { message: err, code: 100 } );
             }
             userToSave.password = hash
 
@@ -26,7 +26,7 @@ router.post("/register", function(req, res) {
                 res.status(200).send( { data: savedUser } );
             })
             .catch(err => {
-                res.status(500).send({ message: err });
+                res.status(500).send( { message: err, code: 102 } );
             });
         });
     });
@@ -35,13 +35,13 @@ router.post("/register", function(req, res) {
 router.post('/login', function (req, res, next) {
     passport.authenticate('local', {session: false}, (err, user, info) => {
         if ( err || !user ) {
-            return res.status(400).json( { message: 'Wrong user or password' + err, code: 404 } );
+            return res.status(400).json( { message: 'Wrong user or password' + err, code: 101 } );
         } 
 
         req.login(user, {session: false}, (err) => {
 
             if (err) {
-               res.status(403).send(err);
+               res.status(403).send({ message: err, code: 100 });
             }
         // generate a signed son web token with the contents of user object and return it in the response
             const token = jwt.sign(user.email, 'your_jwt_secret')
