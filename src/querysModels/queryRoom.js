@@ -57,15 +57,15 @@ function roomInformationFilterWhereId(userId) {
                 include: [{
                     attributes: userAtributes,
                     model: userModel,
-                    include: [{
-                        model: appliedFeeModel,
-                        attributes:appliedFeeAtributes,
-                        // where: { roomId: { $col: 'userInRooms.roomId' }},
-                        where: { roomId: { [Op.eq]: 1}},//'userInRoom.roomId' }},
-                        include:[{
-                            model: ruleModel
-                        }]
-                    }]
+                    // include: [{
+                        // model: appliedFeeModel,
+                        // attributes:appliedFeeAtributes,
+                        // // where: { roomId: { $col: 'userInRooms.roomId' }},
+                        // where: { roomId: { [Op.eq]: 1}},//'userInRoom.roomId' }},
+                        // include:[{
+                        //     model: ruleModel
+                        // }]
+                    // }]
                 }]
             },{
                 model: ruleModel
