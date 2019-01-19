@@ -6,7 +6,7 @@ const ruleModel = require('../model/ruleModel');
 const appliedFeeModel = require('../model/appliedFeeModel');
 
 const roomAtributes = ['id', 'name','dueDate', 'color', 'createdAt']
-const userAtributes = ['userName', 'email', 'photoURL']
+const userAtributes = ['id', 'userName', 'email', 'photoURL']
 const userInRoomAtributes = ['userType', 'enterDate','mulltometroUserId', 'roomId']
 const appliedFeeAtributes = ['appliedData', 'dueDate', 'paid', 'paidDate', 'description','ruleId','mulltometroUserId', 'roomId']
 
