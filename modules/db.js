@@ -10,7 +10,10 @@ if(process.env.NODE_ENV == "production") {
 } else {
     sequelize = new Sequelize('mulltometro','root', '123123', {
         host: "localhost",
-        dialect: 'mysql'
+        dialect: 'mysql',
+        logging: false,
+        freezeTableName: true,
+        operatorsAliases: false
     });
 }
 
