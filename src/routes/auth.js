@@ -10,7 +10,7 @@ const bcrypt = require('bcryptjs');
 
 router.post("/authtest", function(req, res) {
     res.status(200).send( { data: "Rodando ok" } );
-}
+});
 
 router.post("/register", function(req, res) {
     const userToSave = req.body.user
