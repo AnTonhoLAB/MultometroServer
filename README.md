@@ -4,7 +4,7 @@
     <img src="https://github.com/AnTonhoLAB/MultometroServer/actions/workflows/Tests.yml/badge.svg" alt="building" />
     <br />
     <a href="https://codecov.io/github/AnTonhoLAB/MultometroServer?branch=master" alt="codecov.io" title="Codecov"><img src="https://codecov.io/github/AnTonhoLAB/MultometroServer/coverage.svg?branch=master" /></a>
-    <a href="https://codebeat.co/projects/github-com-antonholab-MultometroServer-master"><img alt="codebeat badge" src="https://codebeat.co/badges/af4cabc8-3cf6-48da-aa2a-1b718279f6d4" /></a>
+    <a href="https://codebeat.co/projects/github-com-antonholab-multometroserver-master"><img alt="codebeat badge" src="https://codebeat.co/badges/e6c69131-967e-48ae-a9c3-216c0e702d37" /></a>
 </p>
 
 # Multometro Server
